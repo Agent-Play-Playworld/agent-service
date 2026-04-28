@@ -21,7 +21,15 @@ function requiredEnv(name: string): string {
 
 export async function registerBuiltinAgents(): Promise<RegisterResult> {
   const mainNodeId = requiredEnv("AGENT_PLAY_MAIN_NODE_ID");
-  const world = new RemotePlayWorld({ logging: "on" });
+  const nodeCredentials = {
+    rootKey: requiredEnv("AGENT_PLAY_ROOT_KEY"),
+    passw: requiredEnv("AGENT_SERVICE_PASSW"), // 10-key passphrase for main node
+  };
+  const world = new RemotePlayWorld({
+    baseUrl: "https://agent-play.com",
+    nodeCredentials,
+    logging: "on",
+  });
   const openAiApiKey = process.env.OPENAI_API_KEY?.trim();
   if (openAiApiKey !== undefined && openAiApiKey.length > 0) {
     world.initAudio({

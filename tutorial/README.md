@@ -11,6 +11,7 @@ This tutorial walks from first-time project initialization to production deploym
 5. [Step 5A: Deploy to Vercel](./deploy-vercel.md)
 6. [Step 5B: Deploy to Render](./deploy-render.md)
 7. [Step 5C: Deploy to DigitalOcean](./deploy-digitalocean.md)
+8. [Troubleshooting](./troubleshooting.md)
 
 ## Expected outcome
 

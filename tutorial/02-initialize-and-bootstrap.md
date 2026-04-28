@@ -35,6 +35,8 @@ Copy credential values from:
 
 Populate these variables in `.env`:
 
+- `AGENT_PLAY_ROOT_KEY` (value from your `.root` file)
+- `AGENT_SERVICE_PASSW` (the 10-key phrase generated during `create-main-node`)
 - `AGENT_PLAY_MAIN_NODE_ID`
 - `AGENT_PLAY_AGENT_NODE_ID_1`
 - `AGENT_PLAY_AGENT_NODE_ID_2` (optional)
@@ -44,3 +46,7 @@ Populate these variables in `.env`:
 This project expects identity values from env, not hardcoded values.
 
 Check current contract in the root `README.md` under "Node identity env contract".
+
+## Remote deployment note
+
+When deploying to services like Vercel, Render, or DigitalOcean App Platform, direct filesystem access is not guaranteed. In those environments, provide `AGENT_PLAY_ROOT_KEY` and `AGENT_SERVICE_PASSW` through platform environment variables so node credentials can be constructed at runtime.

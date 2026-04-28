@@ -11,20 +11,22 @@ For a step-by-step path from initialization to production deployment, see:
 ## Quick start
 
 1. Install dependencies:
-   - `npm install`
+  - `npm install`
 2. Prepare local env:
-   - `cp .env.example .env`
+  - `cp .env.example .env`
 3. If you skipped bootstrap during initialize:
-   - `npx agent-play create-main-node`
-   - `npx agent-play create-agent-node` (once or twice)
-   - copy values from `~/.agent-play/credentials.json` into `.env`
+  - `npx agent-play create-main-node`
+  - `npx agent-play create-agent-node` (once or twice)
+  - copy values from `~/.agent-play/credentials.json` into `.env`
 4. Run:
-   - `npm run dev`
+  - `npm run dev`
 
 ## Node identity env contract
 
+- `AGENT_PLAY_ROOT_KEY`: root key content (from `.root`) used for node authentication.
+- `AGENT_SERVICE_PASSW`: 10-key human passphrase generated at main node initialization.
 - `AGENT_PLAY_MAIN_NODE_ID`: main developer node id.
 - `AGENT_PLAY_AGENT_NODE_ID_1`: first agent node id.
 - `AGENT_PLAY_AGENT_NODE_ID_2`: optional second agent node id.
 
-The generated runtime uses env variables for node ids; no hardcoded identities are embedded.
+The generated runtime uses env variables for node ids and node credentials; no hardcoded identities are embedded.

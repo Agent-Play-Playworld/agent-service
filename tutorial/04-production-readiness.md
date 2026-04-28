@@ -8,11 +8,15 @@ Add all required variables from your local `.env` into the target platform's env
 
 At minimum include:
 
+- `AGENT_PLAY_ROOT_KEY` (root key that would normally come from `.root`)
+- `AGENT_SERVICE_PASSW` (the 10-key phrase from main node initialization)
 - `AGENT_PLAY_MAIN_NODE_ID`
 - `AGENT_PLAY_AGENT_NODE_ID_1`
 - `AGENT_PLAY_AGENT_NODE_ID_2` (if used)
 
 Also include any additional credentials your runtime needs.
+
+For remote hosting environments without direct filesystem access, credentials must be loaded through env vars. Do not rely on reading `.root` or local credential files at runtime.
 
 ## Build command and start command
 
