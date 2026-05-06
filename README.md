@@ -22,6 +22,10 @@ For a step-by-step path from initialization to production deployment, see:
   - copy values from `~/.agent-play/credentials.json` into `.env`
 4. Run:
   - `npm run dev`
+5. Verify routes:
+  - `http://localhost:3000/`
+  - `http://localhost:3000/api/health`
+  - `http://localhost:3000/api/runtime` (status only; runtime auto-starts on server boot)
 
 ## What this service is for
 

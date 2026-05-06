@@ -1,19 +1,5 @@
 import express from "express";
-import { loadEnv } from "./load-env.js";
-import { registerAgents } from "./register-agents.js";
-
-type RuntimeState = Awaited<ReturnType<typeof registerAgents>>;
-
-let runtimeStatePromise: Promise<RuntimeState> | undefined;
-
-function getRuntimeState(): Promise<RuntimeState> {
-  if (runtimeStatePromise !== undefined) {
-    return runtimeStatePromise;
-  }
-  loadEnv();
-  runtimeStatePromise = registerAgents();
-  return runtimeStatePromise;
-}
+import { initializeRuntime } from "./runtime/initialize-runtime";
 
 export function createApp() {
   const app = express();
@@ -22,11 +8,6 @@ export function createApp() {
     res.json({ ok: true });
   });
   return app;
-}
-
-export async function initializeRuntime(): Promise<RuntimeState> {
-  const runtimeState = await getRuntimeState();
-  return runtimeState;
 }
 
 export async function startServer(): Promise<void> {

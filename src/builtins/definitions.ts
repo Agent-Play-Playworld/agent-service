@@ -1,6 +1,6 @@
 import { ChatOpenAI } from "@langchain/openai";
 import { createAgent } from "langchain";
-import { calculatorTools, policeReportTools } from "./toolkits/starter-tools.js";
+import { calculatorTools, policeReportTools } from "./toolkits/starter-tools";
 
 function randomAgentName(prefix: string): string {
   return `${prefix}-${Math.random().toString(36).slice(2, 8)}`;

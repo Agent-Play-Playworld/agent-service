@@ -1,4 +1,4 @@
-import { startServer } from "./express-server.js";
+import { startServer } from "./express-server";
 
 void startServer().catch((error: unknown) => {
   console.error(error);

@@ -25,15 +25,16 @@ Apply them to:
 
 ## 4) Configure build and run behavior
 
-This repository includes a `vercel.json` that routes all requests to `api/index.js` and runs the Node service as a Vercel function.
+This repository runs as a Next.js app, so Vercel can auto-detect framework settings.
 
 In Project Settings:
 
-- Build command: `npm run build`
-- Install command: `npm install`
-- Output Directory: leave empty (do not set `public`)
+- Framework Preset: `Next.js`
+- Build command: `npm run build` (default)
+- Install command: `npm install` (default)
+- Output Directory: leave empty (Next.js default)
 
-For Node server deployments on Vercel, ensure your app is configured in a way Vercel supports for long-running server behavior.
+Runtime behavior note: this project initializes the agent runtime in a server route (`/api/runtime`). Vercel may recycle server instances between requests, so validate behavior under your expected traffic patterns.
 
 ## 5) Deploy and validate
 

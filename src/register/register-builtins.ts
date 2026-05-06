@@ -3,12 +3,18 @@ import {
   RemotePlayWorld,
   type RegisteredPlayer,
 } from "@agent-play/sdk";
-import { getStarterAgentDefinitions } from "../builtins/definitions.js";
-import { executeToolCapability } from "../tool-handlers/execute-tool-capability.js";
+import { getStarterAgentDefinitions } from "../builtins/definitions";
+import { executeToolCapability } from "../tool-handlers/execute-tool-capability";
 
 type RegisterResult = {
   world: RemotePlayWorld;
   registeredAgentIds: string[];
+  initializedAgents: {
+    id: string;
+    name: string;
+    nodeId: string;
+    type: "langchain";
+  }[];
 };
 
 function requiredEnv(name: string): string {
@@ -44,6 +50,12 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
     (process.env.AGENT_PLAY_AGENT_NODE_ID_2?.trim() ?? "").length > 0;
   const definitions = getStarterAgentDefinitions(hasSecondAgent ? 2 : 1);
   const registeredAgentIds: string[] = [];
+  const initializedAgents: {
+    id: string;
+    name: string;
+    nodeId: string;
+    type: "langchain";
+  }[] = [];
   const chatAgentsByPlayerId = new Map<string, unknown>();
   const registeredPlayers: RegisteredPlayer[] = [];
   for (const def of definitions) {
@@ -55,6 +67,12 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
       enableP2a: "on",
     });
     registeredAgentIds.push(registered.id);
+    initializedAgents.push({
+      id: registered.id,
+      name: def.name,
+      nodeId: def.nodeId,
+      type: def.type,
+    });
     registeredPlayers.push(registered);
   }
   for (let i = 0; i < registeredPlayers.length; i++) {
@@ -66,5 +84,5 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
     chatAgentsByPlayerId: chatAgentsByPlayerId as Map<string, never>,
   });
 
-  return { world, registeredAgentIds };
+  return { world, registeredAgentIds, initializedAgents };
 }

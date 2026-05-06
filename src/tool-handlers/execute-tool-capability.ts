@@ -1,4 +1,4 @@
-import { resolveToolCapabilityHandler } from "./tool-capability-registry.js";
+import { resolveToolCapabilityHandler } from "./tool-capability-registry";
 
 export async function executeToolCapability(options: {
   toolName: string;

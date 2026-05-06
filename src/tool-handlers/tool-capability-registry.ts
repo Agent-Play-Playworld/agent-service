@@ -1,6 +1,6 @@
-import { executeAssistCalculateCoefficient } from "./assist-calculate-coefficient.js";
-import { executeAssistCollectSceneDetails } from "./assist-collect-scene-details.js";
-import { executeChatTool } from "./chat-tool.js";
+import { executeAssistCalculateCoefficient } from "./assist-calculate-coefficient";
+import { executeAssistCollectSceneDetails } from "./assist-collect-scene-details";
+import { executeChatTool } from "./chat-tool";
 
 export type ToolCapabilityHandler = (
   args: Record<string, unknown>

@@ -1,5 +1,5 @@
-import { loadEnv } from "./load-env.js";
-import { registerAgents } from "./register-agents.js";
+import { loadEnv } from "./load-env";
+import { registerAgents } from "./register-agents";
 
 export async function startServer(): Promise<void> {
   loadEnv();
