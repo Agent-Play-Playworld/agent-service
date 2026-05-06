@@ -23,15 +23,17 @@ export function initializeBusinessDeveloperModel(): ChatOpenAI {
 
 export function createBusinessDeveloperDefinition(nodeId: string): AgentDefinition {
   const model = initializeBusinessDeveloperModel();
+  const realtimeInstructions = readPersonality();
   return {
     nodeId,
     name: "Business Development AI",
     type: "langchain",
+    realtimeInstructions,
     agent: createAgent({
       name: randomAgentName("lc-business-developer"),
       model,
       tools: [...businessDeveloperTools],
-      systemPrompt: randomSystemPrompt("Business Developer", readPersonality()),
+      systemPrompt: randomSystemPrompt("Business Developer", realtimeInstructions),
     }),
   };
 }

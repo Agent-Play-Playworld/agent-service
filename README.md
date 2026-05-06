@@ -25,7 +25,7 @@ For a step-by-step path from initialization to production deployment, see:
 5. Verify routes:
   - `http://localhost:3000/`
   - `http://localhost:3000/api/health`
-  - `POST http://localhost:3000/api/runtime/bootstrap` (starts agents/runtime)
+  - `POST http://localhost:3000/api/runtime/bootstrap?key=<AGENT_SERVICE_KEY>` (starts agents/runtime)
 
 ## What this service is for
 
@@ -66,5 +66,6 @@ Node runtime toggles are controlled in `node-tuning.yaml`:
 - `AGENT_PLAY_AGENT_NODE_ID_1_2`: node 1, second agent node id.
 - `AGENT_PLAY_AGENT_NODE_ID_2_1`: node 2, first agent node id.
 - `AGENT_PLAY_AGENT_NODE_ID_2_2`: node 2, second agent node id.
+- `AGENT_SERVICE_KEY`: bootstrap endpoint key (minimum 16 characters).
 
 The generated runtime uses env variables for node ids and node credentials; no hardcoded identities are embedded.

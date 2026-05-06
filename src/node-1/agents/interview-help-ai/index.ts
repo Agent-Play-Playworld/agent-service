@@ -23,15 +23,17 @@ export function initializeInterviewHelpAiModel(): ChatOpenAI {
 
 export function createInterviewHelpAiDefinition(nodeId: string): AgentDefinition {
   const model = initializeInterviewHelpAiModel();
+  const realtimeInstructions = readPersonality();
   return {
     nodeId,
     name: "Interview Help AI",
     type: "langchain",
+    realtimeInstructions,
     agent: createAgent({
       name: randomAgentName("lc-interview-help-ai"),
       model,
       tools: [...interviewHelpAiTools],
-      systemPrompt: randomSystemPrompt("Interview Help AI", `${readPersonality()}`),
+      systemPrompt: randomSystemPrompt("Interview Help AI", realtimeInstructions),
     }),
   };
 }

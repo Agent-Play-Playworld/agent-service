@@ -5,6 +5,7 @@ export type AgentDefinition = {
   name: string;
   type: "langchain";
   agent: ReturnType<typeof createAgent>;
+  realtimeInstructions: string;
 };
 
 export type ToolCapabilityHandler = (

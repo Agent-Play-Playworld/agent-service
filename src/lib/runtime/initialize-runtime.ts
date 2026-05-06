@@ -1,6 +1,8 @@
 import { loadEnv } from "../../load-env";
 import { registerAgents } from "../../register-agents";
 
+const RUNTIME_LOG_PREFIX = "[runtime:init]";
+
 type RuntimeState = Awaited<ReturnType<typeof registerAgents>>;
 type RuntimeMetadata = {
   startedAt: string;
@@ -80,8 +82,10 @@ function getNodeInformation(): RuntimeNodeInformation {
 
 export function initializeRuntime(): Promise<RuntimeState> {
   if (runtimeStatePromise !== undefined) {
+    console.log(`${RUNTIME_LOG_PREFIX} already in progress or ready`);
     return runtimeStatePromise;
   }
+  console.log(`${RUNTIME_LOG_PREFIX} start initialization requested`);
   loadEnv();
   runtimeStatus = {
     ...runtimeStatus,
@@ -91,6 +95,10 @@ export function initializeRuntime(): Promise<RuntimeState> {
   };
   runtimeStatePromise = registerAgents()
     .then((runtimeState) => {
+      console.log(`${RUNTIME_LOG_PREFIX} initialization succeeded`, {
+        registeredAgentCount: runtimeState.registeredAgentIds.length,
+        registeredAgentIds: runtimeState.registeredAgentIds,
+      });
       runtimeStatus = {
         state: "ready",
         message: null,
@@ -109,6 +117,9 @@ export function initializeRuntime(): Promise<RuntimeState> {
     })
     .catch((error: unknown) => {
       const message = error instanceof Error ? error.message : String(error);
+      console.error(`${RUNTIME_LOG_PREFIX} initialization failed`, {
+        message,
+      });
       runtimeStatus = {
         ...runtimeStatus,
         state: "error",
