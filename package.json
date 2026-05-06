@@ -12,9 +12,10 @@
     "startup-support"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "dev": "tsx src/index.ts",
-    "start": "node dist/index.js"
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@agent-play/sdk": "^3.2.1",
@@ -22,12 +23,16 @@
     "dotenv": "^17.3.1",
     "express": "^4.21.2",
     "langchain": "^1.2.36",
+    "next": "^16.0.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^22.10.0",
-    "tsx": "^4.21.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "typescript": "~5.9.3"
   }
 }
