@@ -3,5 +3,5 @@ nodes:
     live: true
     enableP2a: true
   - key: node-2
-    live: true
+    live: false
     enableP2a: true
