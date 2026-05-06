@@ -23,15 +23,17 @@ export function initializeJompstartAiModel(): ChatOpenAI {
 
 export function createJompstartAiDefinition(nodeId: string): AgentDefinition {
   const model = initializeJompstartAiModel();
+  const realtimeInstructions = readPersonality();
   return {
     nodeId,
     name: "Jompstart AI",
     type: "langchain",
+    realtimeInstructions,
     agent: createAgent({
       name: randomAgentName("lc-jompstart-ai"),
       model,
       tools: [...jompstartAiTools],
-      systemPrompt: randomSystemPrompt("Jompstart AI", `${readPersonality()}`),
+      systemPrompt: randomSystemPrompt("Jompstart AI", realtimeInstructions),
     }),
   };
 }

@@ -23,15 +23,17 @@ export function initializeSunctureModel(): ChatOpenAI {
 
 export function createSunctureDefinition(nodeId: string): AgentDefinition {
   const model = initializeSunctureModel();
+  const realtimeInstructions = readPersonality();
   return {
     nodeId,
     name: "Suncture AI",
     type: "langchain",
+    realtimeInstructions,
     agent: createAgent({
       name: randomAgentName("lc-suncture"),
       model,
       tools: [...sunctureTools],
-      systemPrompt: randomSystemPrompt("Suncture", readPersonality()),
+      systemPrompt: randomSystemPrompt("Suncture", realtimeInstructions),
     }),
   };
 }

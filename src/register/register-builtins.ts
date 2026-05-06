@@ -33,16 +33,26 @@ async function registerAgentDefinition(options: {
   definition: AgentDefinition;
   enableP2a: "on" | "off";
 }): Promise<RegisteredPlayer> {
-  return await options.world.addAgent({
+  console.log("[runtime:register] addAgent", {
+    agentName: options.definition.name,
+    nodeId: options.definition.nodeId,
+    enableP2a: options.enableP2a,
+  });
+  const addAgentInput = {
     name: options.definition.name,
     type: options.definition.type,
     agent: langchainRegistration(options.definition.agent),
     nodeId: options.definition.nodeId,
     enableP2a: options.enableP2a,
-  });
+    realtimeInstructions: options.definition.realtimeInstructions,
+  };
+  return await (options.world.addAgent as (input: unknown) => Promise<RegisteredPlayer>)(
+    addAgentInput
+  );
 }
 
 export async function registerBuiltinAgents(): Promise<RegisterResult> {
+  console.log("[runtime:register] starting agent registration");
   const nodeCredentials = {
     rootKey: requiredEnv("AGENT_PLAY_ROOT_KEY"),
     passw: requiredEnv("AGENT_SERVICE_PASSW"), // 10-key passphrase for main node
@@ -54,6 +64,7 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
   });
   const openAiApiKey = process.env.OPENAI_API_KEY?.trim();
   if (openAiApiKey !== undefined && openAiApiKey.length > 0) {
+    console.log("[runtime:register] enabling audio path");
     world.initAudio({
       openai: {
         apiKey: openAiApiKey,
@@ -61,6 +72,10 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
     });
   }
   const nodeRegistrations = getMainNodeRegistrations();
+  console.log("[runtime:register] resolved node registrations", {
+    nodeKeys: nodeRegistrations.map((node) => node.key),
+    totalNodes: nodeRegistrations.length,
+  });
   const registeredAgentIds: string[] = [];
   const initializedAgents: {
     id: string;
@@ -74,6 +89,11 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
   const registeredPlayers: RegisteredPlayer[] = [];
 
   for (const nodeRegistration of nodeRegistrations) {
+    console.log("[runtime:register] connecting main node", {
+      key: nodeRegistration.key,
+      mainNodeId: nodeRegistration.mainNodeId,
+      enableP2a: nodeRegistration.enableP2a,
+    });
     await world.connect({ mainNodeId: nodeRegistration.mainNodeId });
     const firstDefinition = nodeRegistration.agents[0];
     const secondDefinition = nodeRegistration.agents[1];
@@ -104,6 +124,10 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
     playerIds: registeredPlayers.map((player) => player.id),
     executeTool: executeToolCapability,
     chatAgentsByPlayerId: chatAgentsByPlayerId as Map<string, never>,
+  });
+  console.log("[runtime:register] subscribe intercom complete", {
+    playerCount: registeredPlayers.length,
+    registeredAgentIds,
   });
 
   return { world, registeredAgentIds, initializedAgents };
