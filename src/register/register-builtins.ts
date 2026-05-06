@@ -5,6 +5,7 @@ import {
 } from "@agent-play/sdk";
 import { getAgentDefinitions } from "../agents";
 import { executeToolCapability } from "../agents/execute-tool-capability";
+import type { AgentDefinition } from "../agents/types";
 
 type RegisterResult = {
   world: RemotePlayWorld;
@@ -23,6 +24,19 @@ function requiredEnv(name: string): string {
     throw new Error(`Missing required env var: ${name}`);
   }
   return value;
+}
+
+async function registerAgentDefinition(options: {
+  world: RemotePlayWorld;
+  definition: AgentDefinition;
+}): Promise<RegisteredPlayer> {
+  return await options.world.addAgent({
+    name: options.definition.name,
+    type: options.definition.type,
+    agent: langchainRegistration(options.definition.agent),
+    nodeId: options.definition.nodeId,
+    enableP2a: "on",
+  });
 }
 
 export async function registerBuiltinAgents(): Promise<RegisterResult> {
@@ -56,26 +70,43 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
   }[] = [];
   const chatAgentsByPlayerId = new Map<string, unknown>();
   const registeredPlayers: RegisteredPlayer[] = [];
-  for (const def of definitions) {
-    const registered = await world.addAgent({
-      name: def.name,
-      type: def.type,
-      agent: langchainRegistration(def.agent),
-      nodeId: def.nodeId,
-      enableP2a: "on",
+
+  const firstDefinition = definitions[0];
+  if (firstDefinition === undefined) {
+    throw new Error("At least one agent definition is required.");
+  }
+
+  const firstRegistered = await registerAgentDefinition({
+    world,
+    definition: firstDefinition,
+  });
+  registeredAgentIds.push(firstRegistered.id);
+  initializedAgents.push({
+    id: firstRegistered.id,
+    name: firstDefinition.name,
+    nodeId: firstDefinition.nodeId,
+    type: firstDefinition.type,
+  });
+  registeredPlayers.push(firstRegistered);
+  chatAgentsByPlayerId.set(firstRegistered.id, firstDefinition.agent);
+
+  const secondDefinition = definitions[1];
+  if (secondDefinition !== undefined) {
+    const secondRegistered = await registerAgentDefinition({
+      world,
+      definition: secondDefinition,
     });
-    registeredAgentIds.push(registered.id);
+    registeredAgentIds.push(secondRegistered.id);
     initializedAgents.push({
-      id: registered.id,
-      name: def.name,
-      nodeId: def.nodeId,
-      type: def.type,
+      id: secondRegistered.id,
+      name: secondDefinition.name,
+      nodeId: secondDefinition.nodeId,
+      type: secondDefinition.type,
     });
-    registeredPlayers.push(registered);
+    registeredPlayers.push(secondRegistered);
+    chatAgentsByPlayerId.set(secondRegistered.id, secondDefinition.agent);
   }
-  for (let i = 0; i < registeredPlayers.length; i++) {
-    chatAgentsByPlayerId.set(registeredPlayers[i].id, definitions[i].agent);
-  }
+
   world.subscribeIntercomCommands({
     playerIds: registeredPlayers.map((player) => player.id),
     executeTool: executeToolCapability,
