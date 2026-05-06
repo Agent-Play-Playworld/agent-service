@@ -19,6 +19,7 @@ export type ToolCapabilityEntry = {
 export type MainNodeRegistration = {
   key: string;
   mainNodeId: string;
+  enableP2a: "on" | "off";
   agents: AgentDefinition[];
   toolCapabilities: ToolCapabilityEntry[];
 };

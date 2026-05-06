@@ -1,0 +1,7 @@
+nodes:
+  - key: node-1
+    live: true
+    enableP2a: true
+  - key: node-2
+    live: true
+    enableP2a: true

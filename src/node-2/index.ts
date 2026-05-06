@@ -1,6 +1,9 @@
 import { requiredEnv } from "../lib/nodes/shared";
 import type { MainNodeRegistration } from "../lib/nodes/types";
-import { createSunctureDefinition, sunctureToolCapabilities } from "./agents/suncture";
+import {
+  createInterviewHelpAiDefinition,
+  interviewHelpAiToolCapabilities,
+} from "../node-1/agents/interview-help-ai";
 import {
   businessDeveloperToolCapabilities,
   createBusinessDeveloperDefinition,
@@ -10,10 +13,11 @@ export function createNode2Registration(): MainNodeRegistration {
   return {
     key: "node-2",
     mainNodeId: requiredEnv("AGENT_PLAY_MAIN_NODE_ID_2"),
+    enableP2a: "on",
     agents: [
-      createSunctureDefinition(requiredEnv("AGENT_PLAY_AGENT_NODE_ID_2_1")),
+      createInterviewHelpAiDefinition(requiredEnv("AGENT_PLAY_AGENT_NODE_ID_2_1")),
       createBusinessDeveloperDefinition(requiredEnv("AGENT_PLAY_AGENT_NODE_ID_2_2")),
     ],
-    toolCapabilities: [...sunctureToolCapabilities, ...businessDeveloperToolCapabilities],
+    toolCapabilities: [...interviewHelpAiToolCapabilities, ...businessDeveloperToolCapabilities],
   };
 }
