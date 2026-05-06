@@ -1,4 +1,15 @@
-import { resolveToolCapabilityHandler } from "./tool-capability-registry";
+import { getToolCapabilityEntries } from "./index";
+import type { ToolCapabilityHandler } from "./types";
+
+function resolveToolCapabilityHandler(toolName: string): ToolCapabilityHandler | null {
+  const entries = getToolCapabilityEntries();
+  for (const entry of entries) {
+    if (entry.toolName === toolName) {
+      return entry.handler;
+    }
+  }
+  return null;
+}
 
 export async function executeToolCapability(options: {
   toolName: string;

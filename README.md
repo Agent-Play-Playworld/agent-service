@@ -33,6 +33,22 @@ For a step-by-step path from initialization to production deployment, see:
 - Iterating quickly from local testing to production hosting
 - Adapting agent roles and instructions to fit different business and customer segments
 
+## Agent architecture
+
+Each agent lives in its own folder under `src/agents`, for example:
+
+- `src/agents/interview-help-ai`
+- `src/agents/jompstart-ai`
+
+Each folder keeps that agent's:
+
+- `definition.ts`
+- `tools.ts`
+- `tool-capabilities.ts`
+- `personality.txt`
+
+To add a new agent, duplicate an existing `src/agents/<agent-name>` folder, update its files, and register it in `src/agents/index.ts`.
+
 ## Node identity env contract
 
 - `AGENT_PLAY_ROOT_KEY`: root key content (from `.root`) used for node authentication.

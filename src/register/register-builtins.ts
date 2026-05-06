@@ -3,8 +3,8 @@ import {
   RemotePlayWorld,
   type RegisteredPlayer,
 } from "@agent-play/sdk";
-import { getStarterAgentDefinitions } from "../builtins/definitions";
-import { executeToolCapability } from "../tool-handlers/execute-tool-capability";
+import { getAgentDefinitions } from "../agents";
+import { executeToolCapability } from "../agents/execute-tool-capability";
 
 type RegisterResult = {
   world: RemotePlayWorld;
@@ -46,9 +46,7 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
   }
   await world.connect({ mainNodeId });
 
-  const hasSecondAgent =
-    (process.env.AGENT_PLAY_AGENT_NODE_ID_2?.trim() ?? "").length > 0;
-  const definitions = getStarterAgentDefinitions(hasSecondAgent ? 2 : 1);
+  const definitions = getAgentDefinitions();
   const registeredAgentIds: string[] = [];
   const initializedAgents: {
     id: string;
