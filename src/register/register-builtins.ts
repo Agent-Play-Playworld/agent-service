@@ -26,7 +26,7 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
     passw: requiredEnv("AGENT_SERVICE_PASSW"), // 10-key passphrase for main node
   };
   const world = new RemotePlayWorld({
-    baseUrl: "https://agent-play.com",
+    baseUrl: requiredEnv("AGENT_PLAY_WEB_UI_URL"),
     nodeCredentials,
     logging: "on",
   });
