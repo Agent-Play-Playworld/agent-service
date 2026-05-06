@@ -34,7 +34,7 @@ In Project Settings:
 - Install command: `npm install` (default)
 - Output Directory: leave empty (Next.js default)
 
-Runtime behavior note: this project initializes the agent runtime in a server route (`/api/runtime`). Vercel may recycle server instances between requests, so validate behavior under your expected traffic patterns.
+Runtime behavior note: this project initializes the agent runtime via `POST /api/runtime/bootstrap`. Vercel may recycle server instances between requests, so trigger bootstrap per active instance and validate behavior under your expected traffic patterns.
 
 ## 5) Deploy and validate
 

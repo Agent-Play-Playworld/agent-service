@@ -1,5 +1,5 @@
-import { loadEnv } from "../load-env";
-import { registerAgents } from "../register-agents";
+import { loadEnv } from "../../load-env";
+import { registerAgents } from "../../register-agents";
 
 type RuntimeState = Awaited<ReturnType<typeof registerAgents>>;
 type RuntimeMetadata = {

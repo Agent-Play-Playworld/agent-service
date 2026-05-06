@@ -2,16 +2,17 @@ import { NextResponse } from "next/server";
 import {
   getRuntimeStatus,
   initializeRuntime,
-} from "../../../src/runtime/initialize-runtime";
+} from "../../../../src/lib/runtime/initialize-runtime";
 
-export async function GET() {
+export async function POST() {
   try {
-    const { registeredAgentIds } = await initializeRuntime();
+    const { registeredAgentIds, initializedAgents } = await initializeRuntime();
     return NextResponse.json({
       ok: true,
       state: "ready",
       registeredAgentCount: registeredAgentIds.length,
       registeredAgentIds,
+      initializedAgents,
     });
   } catch (_error: unknown) {
     const status = getRuntimeStatus();

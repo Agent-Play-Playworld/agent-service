@@ -25,7 +25,7 @@ For a step-by-step path from initialization to production deployment, see:
 5. Verify routes:
   - `http://localhost:3000/`
   - `http://localhost:3000/api/health`
-  - `http://localhost:3000/api/runtime` (status only; runtime auto-starts on server boot)
+  - `POST http://localhost:3000/api/runtime/bootstrap` (starts agents/runtime)
 
 ## What this service is for
 

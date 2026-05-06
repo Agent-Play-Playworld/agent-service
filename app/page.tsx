@@ -15,7 +15,7 @@ export default function HomePage() {
           <code>/api/health</code>
         </li>
         <li>
-          <code>/api/runtime</code>
+          <code>/api/runtime/bootstrap</code> (POST)
         </li>
       </ul>
     </main>
