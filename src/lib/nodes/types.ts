@@ -15,3 +15,10 @@ export type ToolCapabilityEntry = {
   toolName: string;
   handler: ToolCapabilityHandler;
 };
+
+export type MainNodeRegistration = {
+  key: string;
+  mainNodeId: string;
+  agents: AgentDefinition[];
+  toolCapabilities: ToolCapabilityEntry[];
+};

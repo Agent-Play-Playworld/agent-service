@@ -1,8 +1,8 @@
-import { getToolCapabilityEntries } from "./index";
+import { getMainNodeRegistrations, getToolCapabilityEntriesForNodes } from "./index";
 import type { ToolCapabilityHandler } from "./types";
 
 function resolveToolCapabilityHandler(toolName: string): ToolCapabilityHandler | null {
-  const entries = getToolCapabilityEntries();
+  const entries = getToolCapabilityEntriesForNodes(getMainNodeRegistrations());
   for (const entry of entries) {
     if (entry.toolName === toolName) {
       return entry.handler;

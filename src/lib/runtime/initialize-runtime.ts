@@ -10,7 +10,7 @@ type RuntimeMetadata = {
 };
 type RuntimeNodeInformation = {
   baseUrl: string | null;
-  mainNodeId: string | null;
+  mainNodeIds: string[];
   agentNodeIds: string[];
 };
 type RuntimeStatus = {
@@ -37,7 +37,7 @@ let runtimeStatus: RuntimeStatus = {
   },
   nodes: {
     baseUrl: process.env.AGENT_PLAY_WEB_UI_URL?.trim() ?? null,
-    mainNodeId: process.env.AGENT_PLAY_MAIN_NODE_ID?.trim() ?? null,
+    mainNodeIds: [],
     agentNodeIds: [],
   },
   agents: {
@@ -59,14 +59,21 @@ export function getRuntimeStatus(): RuntimeStatus {
 }
 
 function getNodeInformation(): RuntimeNodeInformation {
-  const firstNodeId = process.env.AGENT_PLAY_AGENT_NODE_ID_1?.trim();
-  const secondNodeId = process.env.AGENT_PLAY_AGENT_NODE_ID_2?.trim();
-  const agentNodeIds = [firstNodeId, secondNodeId].filter(
+  const mainNodeId1 = process.env.AGENT_PLAY_MAIN_NODE_ID_1?.trim();
+  const mainNodeId2 = process.env.AGENT_PLAY_MAIN_NODE_ID_2?.trim();
+  const mainNodeIds = [mainNodeId1, mainNodeId2].filter(
+    (nodeId): nodeId is string => nodeId !== undefined && nodeId.length > 0
+  );
+  const node11 = process.env.AGENT_PLAY_AGENT_NODE_ID_1_1?.trim();
+  const node12 = process.env.AGENT_PLAY_AGENT_NODE_ID_1_2?.trim();
+  const node21 = process.env.AGENT_PLAY_AGENT_NODE_ID_2_1?.trim();
+  const node22 = process.env.AGENT_PLAY_AGENT_NODE_ID_2_2?.trim();
+  const agentNodeIds = [node11, node12, node21, node22].filter(
     (nodeId): nodeId is string => nodeId !== undefined && nodeId.length > 0
   );
   return {
     baseUrl: process.env.AGENT_PLAY_WEB_UI_URL?.trim() ?? null,
-    mainNodeId: process.env.AGENT_PLAY_MAIN_NODE_ID?.trim() ?? null,
+    mainNodeIds,
     agentNodeIds,
   };
 }
