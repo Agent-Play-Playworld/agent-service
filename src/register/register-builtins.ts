@@ -31,13 +31,14 @@ function requiredEnv(name: string): string {
 async function registerAgentDefinition(options: {
   world: RemotePlayWorld;
   definition: AgentDefinition;
+  enableP2a: "on" | "off";
 }): Promise<RegisteredPlayer> {
   return await options.world.addAgent({
     name: options.definition.name,
     type: options.definition.type,
     agent: langchainRegistration(options.definition.agent),
     nodeId: options.definition.nodeId,
-    enableP2a: "on",
+    enableP2a: options.enableP2a,
   });
 }
 
@@ -127,6 +128,7 @@ async function registerNodeAgent(options: {
   const registered = await registerAgentDefinition({
     world: options.world,
     definition: options.definition,
+    enableP2a: options.nodeRegistration.enableP2a,
   });
   options.registeredAgentIds.push(registered.id);
   options.initializedAgents.push({

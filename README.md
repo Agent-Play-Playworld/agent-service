@@ -49,7 +49,12 @@ Each agent folder keeps that agent's:
 - `tool-capabilities.ts`
 - `personality.txt`
 
-To add a new agent, duplicate an existing `src/node-x/agents/<agent-name>` folder and register it in that node's `src/node-x/index.ts`. Main nodes are composed in `src/nodes/index.ts`.
+To add a new agent, duplicate an existing `src/node-x/agents/<agent-name>` folder and register it in that node's `src/node-x/index.ts`. Main nodes are composed in `src/lib/nodes/index.ts`.
+
+Node runtime toggles are controlled in `node-tuning.yaml`:
+
+- `live: true|false` toggles node registration on/off by node key
+- `enableP2a: true|false` controls whether node agents register with P2A on/off
 
 ## Node identity env contract
 
