@@ -25,10 +25,13 @@ Apply them to:
 
 ## 4) Configure build and run behavior
 
+This repository includes a `vercel.json` that routes all requests to `api/index.js` and runs the Node service as a Vercel function.
+
 In Project Settings:
 
 - Build command: `npm run build`
 - Install command: `npm install`
+- Output Directory: leave empty (do not set `public`)
 
 For Node server deployments on Vercel, ensure your app is configured in a way Vercel supports for long-running server behavior.
 
