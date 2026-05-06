@@ -1,8 +1,16 @@
 {
   "name": "agent-service",
+  "description": "Multi-agent customer support bot service for startups, companies, indie entrepreneurs, and founders.",
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "keywords": [
+    "agent-service",
+    "customer-support",
+    "chatbots",
+    "multi-agent",
+    "startup-support"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsx src/index.ts",
