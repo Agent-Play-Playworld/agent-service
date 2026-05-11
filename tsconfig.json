@@ -32,5 +32,9 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "paths": {
+    "@agent-play/node-tools": ["../../agent-play/packages/node-tools/src/index.ts"],
+    "@agent-play/sdk": ["../../agent-play/packages/sdk/dist/index.d.ts"]
+  }
 }

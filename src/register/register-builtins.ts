@@ -32,10 +32,12 @@ async function registerAgentDefinition(options: {
   world: RemotePlayWorld;
   definition: AgentDefinition;
   enableP2a: "on" | "off";
+  mainNodeId: string;
 }): Promise<RegisteredPlayer> {
   console.log("[runtime:register] addAgent", {
     agentName: options.definition.name,
     nodeId: options.definition.nodeId,
+    mainNodeId: options.mainNodeId,
     enableP2a: options.enableP2a,
   });
   const addAgentInput = {
@@ -43,6 +45,7 @@ async function registerAgentDefinition(options: {
     type: options.definition.type,
     agent: langchainRegistration(options.definition.agent),
     nodeId: options.definition.nodeId,
+    mainNodeId: options.mainNodeId,
     enableP2a: options.enableP2a,
     realtimeInstructions: options.definition.realtimeInstructions,
   };
@@ -95,6 +98,9 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
       enableP2a: nodeRegistration.enableP2a,
     });
     await world.connect({ mainNodeId: nodeRegistration.mainNodeId });
+    console.log("[runtime:register] connected main node", {
+      mainNodeId: nodeRegistration.mainNodeId,
+    });
     const firstDefinition = nodeRegistration.agents[0];
     const secondDefinition = nodeRegistration.agents[1];
     if (firstDefinition === undefined || secondDefinition === undefined) {
@@ -153,7 +159,9 @@ async function registerNodeAgent(options: {
     world: options.world,
     definition: options.definition,
     enableP2a: options.nodeRegistration.enableP2a,
+    mainNodeId: options.nodeRegistration.mainNodeId,
   });
+
   options.registeredAgentIds.push(registered.id);
   options.initializedAgents.push({
     id: registered.id,
