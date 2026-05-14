@@ -5,10 +5,11 @@ import {
 } from "@agent-play/sdk";
 import { executeToolCapability } from "../lib/nodes/execute-tool-capability";
 import { getMainNodeRegistrations } from "../lib/nodes";
+import { requiredEnv } from "../lib/nodes/shared";
 import type { AgentDefinition, MainNodeRegistration } from "../lib/nodes/types";
 
 type RegisterResult = {
-  world: RemotePlayWorld;
+  worlds: RemotePlayWorld[];
   registeredAgentIds: string[];
   initializedAgents: {
     id: string;
@@ -19,14 +20,6 @@ type RegisterResult = {
     type: "langchain";
   }[];
 };
-
-function requiredEnv(name: string): string {
-  const value = process.env[name]?.trim();
-  if (value === undefined || value.length === 0) {
-    throw new Error(`Missing required env var: ${name}`);
-  }
-  return value;
-}
 
 async function registerAgentDefinition(options: {
   world: RemotePlayWorld;
@@ -56,42 +49,35 @@ async function registerAgentDefinition(options: {
 
 export async function registerBuiltinAgents(): Promise<RegisterResult> {
   console.log("[runtime:register] starting agent registration");
-  const nodeCredentials = {
-    rootKey: requiredEnv("AGENT_PLAY_ROOT_KEY"),
-    passw: requiredEnv("AGENT_SERVICE_PASSW"), // 10-key passphrase for main node
-  };
-  const world = new RemotePlayWorld({
-    baseUrl: requiredEnv("AGENT_PLAY_WEB_UI_URL"),
-    nodeCredentials,
-    logging: "on",
-  });
+  const baseUrl = requiredEnv("AGENT_PLAY_WEB_UI_URL");
+  const rootKey = requiredEnv("AGENT_PLAY_ROOT_KEY");
   const openAiApiKey = process.env.OPENAI_API_KEY?.trim();
-  if (openAiApiKey !== undefined && openAiApiKey.length > 0) {
-    console.log("[runtime:register] enabling audio path");
-    world.initAudio({
-      openai: {
-        apiKey: openAiApiKey,
-      },
-    });
-  }
   const nodeRegistrations = getMainNodeRegistrations();
   console.log("[runtime:register] resolved node registrations", {
     nodeKeys: nodeRegistrations.map((node) => node.key),
     totalNodes: nodeRegistrations.length,
   });
   const registeredAgentIds: string[] = [];
-  const initializedAgents: {
-    id: string;
-    name: string;
-    nodeId: string;
-    mainNodeId: string;
-    mainNodeKey: string;
-    type: "langchain";
-  }[] = [];
-  const chatAgentsByPlayerId = new Map<string, unknown>();
-  const registeredPlayers: RegisteredPlayer[] = [];
+  const initializedAgents: RegisterResult["initializedAgents"] = [];
+  const worlds: RemotePlayWorld[] = [];
 
   for (const nodeRegistration of nodeRegistrations) {
+    const world = new RemotePlayWorld({
+      baseUrl,
+      nodeCredentials: {
+        rootKey,
+        passw: nodeRegistration.mainNodePassphrase,
+      },
+      logging: "on",
+    });
+    if (openAiApiKey !== undefined && openAiApiKey.length > 0) {
+      console.log("[runtime:register] enabling audio path", { nodeKey: nodeRegistration.key });
+      world.initAudio({
+        openai: {
+          apiKey: openAiApiKey,
+        },
+      });
+    }
     console.log("[runtime:register] connecting main node", {
       key: nodeRegistration.key,
       mainNodeId: nodeRegistration.mainNodeId,
@@ -106,6 +92,8 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
     if (firstDefinition === undefined || secondDefinition === undefined) {
       throw new Error(`${nodeRegistration.key} must define exactly two agents.`);
     }
+    const chatAgentsByPlayerId = new Map<string, unknown>();
+    const registeredPlayers: RegisteredPlayer[] = [];
     await registerNodeAgent({
       world,
       definition: firstDefinition,
@@ -124,19 +112,21 @@ export async function registerBuiltinAgents(): Promise<RegisterResult> {
       registeredPlayers,
       chatAgentsByPlayerId,
     });
+    world.subscribeIntercomCommands({
+      playerIds: registeredPlayers.map((player) => player.id),
+      executeTool: executeToolCapability,
+      chatAgentsByPlayerId: chatAgentsByPlayerId as Map<string, never>,
+    });
+    worlds.push(world);
   }
 
-  world.subscribeIntercomCommands({
-    playerIds: registeredPlayers.map((player) => player.id),
-    executeTool: executeToolCapability,
-    chatAgentsByPlayerId: chatAgentsByPlayerId as Map<string, never>,
-  });
   console.log("[runtime:register] subscribe intercom complete", {
-    playerCount: registeredPlayers.length,
+    worldCount: worlds.length,
+    playerCount: registeredAgentIds.length,
     registeredAgentIds,
   });
 
-  return { world, registeredAgentIds, initializedAgents };
+  return { worlds, registeredAgentIds, initializedAgents };
 }
 
 async function registerNodeAgent(options: {
