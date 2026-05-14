@@ -3,7 +3,7 @@ import { z } from "zod";
 
 const interviewHelpChatTool = tool(({ message }: { message: string }) => `interview:${message}`, {
   name: "chat_tool",
-  description: "Chat tool for Interview Help AI candidate coaching conversations.",
+    description: "Chat tool for Mink AI candidate coaching conversations.",
   schema: z.object({
     message: z.string(),
   }),

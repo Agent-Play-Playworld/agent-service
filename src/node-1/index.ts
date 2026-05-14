@@ -1,3 +1,4 @@
+import { mainNodePassphraseForKey } from "../lib/nodes/main-node-passphrase";
 import { requiredEnv } from "../lib/nodes/shared";
 import type { MainNodeRegistration } from "../lib/nodes/types";
 import {
@@ -10,6 +11,7 @@ export function createNode1Registration(): MainNodeRegistration {
   return {
     key: "node-1",
     mainNodeId: requiredEnv("AGENT_PLAY_MAIN_NODE_ID_1"),
+    mainNodePassphrase: mainNodePassphraseForKey("node-1"),
     enableP2a: "on",
     agents: [
       createSunctureDefinition(requiredEnv("AGENT_PLAY_AGENT_NODE_ID_1_1")),
