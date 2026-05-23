@@ -4,38 +4,38 @@ import { ChatOpenAI } from "@langchain/openai";
 import { createAgent } from "langchain";
 import { randomAgentName, randomSystemPrompt, requiredEnv } from "../../../lib/nodes/shared";
 import type { AgentDefinition } from "../../../lib/nodes/types";
-import { businessDeveloperToolCapabilities } from "./tool-capabilities";
-import { businessDeveloperTools } from "./tools";
+import { agentPlayAiToolCapabilities } from "./tool-capabilities";
+import { agentPlayAiTools } from "./tools";
 
 function readPersonality(): string {
   return readFileSync(
-    join(process.cwd(), "src", "node-2", "agents", "business-developer", "personality.txt"),
+    join(process.cwd(), "src", "node-2", "agents", "agent-play-ai", "personality.txt"),
     "utf8"
   ).trim();
 }
 
-export function initializeBusinessDeveloperModel(): ChatOpenAI {
+export function initializeAgentPlayAiModel(): ChatOpenAI {
   return new ChatOpenAI({
     apiKey: requiredEnv("OPENAI_API_KEY"),
     model: process.env.OPENAI_MODEL?.trim() || "gpt-4.1",
   });
 }
 
-export function createBusinessDeveloperDefinition(nodeId: string): AgentDefinition {
-  const model = initializeBusinessDeveloperModel();
+export function createAgentPlayAiDefinition(nodeId: string): AgentDefinition {
+  const model = initializeAgentPlayAiModel();
   const realtimeInstructions = readPersonality();
   return {
     nodeId,
-    name: "Business Development AI",
+    name: "Agent Play AI",
     type: "langchain",
     realtimeInstructions,
     agent: createAgent({
-      name: randomAgentName("lc-business-developer"),
+      name: randomAgentName("lc-agent-play-ai"),
       model,
-      tools: [...businessDeveloperTools],
-      systemPrompt: randomSystemPrompt("Business Developer", realtimeInstructions),
+      tools: [...agentPlayAiTools],
+      systemPrompt: randomSystemPrompt("Agent Play AI", realtimeInstructions),
     }),
   };
 }
 
-export { businessDeveloperToolCapabilities };
+export { agentPlayAiToolCapabilities };

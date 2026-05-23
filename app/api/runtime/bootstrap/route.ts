@@ -8,8 +8,6 @@ import {
   readServiceKeyFromEnv,
 } from "../../../../src/lib/bootstrap-auth";
 
-export const runtime = "nodejs";
-
 export async function POST(request: Request) {
   try {
     if (!isAuthorizedBootstrapRequest(request)) {

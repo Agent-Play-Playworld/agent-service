@@ -228,9 +228,9 @@ These changes shorten time-to-diagnosis in production significantly.
 5. Verify `/api/health` state transitions to `ready`.
 6. Validate agent registration IDs and intercom subscription logs.
 7. For incidents:
-   - disable affected node via `live: false`
-   - optionally disable P2A via `enableP2a: false`
-   - redeploy and re-bootstrap.
+  - disable affected node via `live: false`
+  - optionally disable P2A via `enableP2a: false`
+  - redeploy and re-bootstrap.
 
 ---
 
@@ -247,4 +247,3 @@ The winning pattern was:
 - startup and registration observability
 
 Render remains strong for always-on service semantics, but with this architecture in place, Vercel can be operated reliably and safely for this agent platform.
-

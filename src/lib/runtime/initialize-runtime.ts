@@ -63,14 +63,17 @@ export function getRuntimeStatus(): RuntimeStatus {
 function getNodeInformation(): RuntimeNodeInformation {
   const mainNodeId1 = process.env.AGENT_PLAY_MAIN_NODE_ID_1?.trim();
   const mainNodeId2 = process.env.AGENT_PLAY_MAIN_NODE_ID_2?.trim();
-  const mainNodeIds = [mainNodeId1, mainNodeId2].filter(
+  const mainNodeId3 = process.env.AGENT_PLAY_MAIN_NODE_ID_3?.trim();
+  const mainNodeIds = [mainNodeId1, mainNodeId2, mainNodeId3].filter(
     (nodeId): nodeId is string => nodeId !== undefined && nodeId.length > 0
   );
   const node11 = process.env.AGENT_PLAY_AGENT_NODE_ID_1_1?.trim();
   const node12 = process.env.AGENT_PLAY_AGENT_NODE_ID_1_2?.trim();
   const node21 = process.env.AGENT_PLAY_AGENT_NODE_ID_2_1?.trim();
   const node22 = process.env.AGENT_PLAY_AGENT_NODE_ID_2_2?.trim();
-  const agentNodeIds = [node11, node12, node21, node22].filter(
+  const node31 = process.env.AGENT_PLAY_AGENT_NODE_ID_3_1?.trim();
+  const node32 = process.env.AGENT_PLAY_AGENT_NODE_ID_3_2?.trim();
+  const agentNodeIds = [node11, node12, node21, node22, node31, node32].filter(
     (nodeId): nodeId is string => nodeId !== undefined && nodeId.length > 0
   );
   return {

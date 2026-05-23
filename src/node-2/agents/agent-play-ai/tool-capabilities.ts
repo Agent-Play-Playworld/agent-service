@@ -1,7 +1,7 @@
 import { executeChatTool } from "../../../lib/nodes/shared";
 import type { ToolCapabilityEntry } from "../../../lib/nodes/types";
 
-function executeAssistBusinessSystemAudit(args: {
+function executeAssistAgentPlayScenario(args: {
   domain?: string;
   issue?: string;
   targetOutcome?: string;
@@ -23,12 +23,12 @@ function executeAssistBusinessSystemAudit(args: {
   };
 }
 
-export const businessDeveloperToolCapabilities: ToolCapabilityEntry[] = [
+export const agentPlayAiToolCapabilities: ToolCapabilityEntry[] = [
   { toolName: "chat_tool", handler: (args) => executeChatTool({ message: String(args.message ?? "") }) },
   {
     toolName: "assist_business_system_audit",
     handler: (args) =>
-      executeAssistBusinessSystemAudit({
+      executeAssistAgentPlayScenario({
         domain: String(args.domain ?? ""),
         issue: String(args.issue ?? ""),
         targetOutcome: String(args.targetOutcome ?? ""),

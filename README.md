@@ -40,7 +40,9 @@ Each main node lives in its own folder under `src/node-x`, with agents inside:
 - `src/node-1/agents/interview-help-ai`
 - `src/node-1/agents/jompstart-ai`
 - `src/node-2/agents/suncture`
-- `src/node-2/agents/business-developer`
+- `src/node-2/agents/agent-play-ai`
+- `src/node-3/agents/legal-advisory`
+- `src/node-3/agents/car-auto-check-up`
 
 Each agent folder keeps that agent's:
 
@@ -55,17 +57,15 @@ Node runtime toggles are controlled in `node-tuning.yaml`:
 
 - `live: true|false` toggles node registration on/off by node key
 - `enableP2a: true|false` controls whether node agents register with P2A on/off
+- `node-3` defaults to `live: false` until you set `AGENT_PLAY_MAIN_NODE_ID_3`, agent node ids, and passphrases; then set `live: true`.
 
 ## Node identity env contract
 
 - `AGENT_PLAY_ROOT_KEY`: root key content (from `.root`) used for node authentication.
-- `AGENT_SERVICE_PASSW`: 10-key human passphrase generated at main node initialization.
-- `AGENT_PLAY_MAIN_NODE_ID_1`: node 1 main node id.
-- `AGENT_PLAY_MAIN_NODE_ID_2`: node 2 main node id.
-- `AGENT_PLAY_AGENT_NODE_ID_1_1`: node 1, first agent node id.
-- `AGENT_PLAY_AGENT_NODE_ID_1_2`: node 1, second agent node id.
-- `AGENT_PLAY_AGENT_NODE_ID_2_1`: node 2, first agent node id.
-- `AGENT_PLAY_AGENT_NODE_ID_2_2`: node 2, second agent node id.
+- `AGENT_SERVICE_PASSW`: default 10-word main-node passphrase when a per-node override is not set.
+- `AGENT_PLAY_MAIN_NODE_ID_1_PASSW`, `AGENT_PLAY_MAIN_NODE_ID_2_PASSW`, `AGENT_PLAY_MAIN_NODE_ID_3_PASSW`: optional passphrase aligned with each main node slot (use when mains use different phrases). If unset for a node, `AGENT_SERVICE_PASSW` is used.
+- `AGENT_PLAY_MAIN_NODE_ID_1` / `_2` / `_3`: main node id per logical node.
+- `AGENT_PLAY_AGENT_NODE_ID_<n>_<slot>`: agent node ids (`AGENT_PLAY_AGENT_NODE_ID_3_1`, `AGENT_PLAY_AGENT_NODE_ID_3_2`, etc.).
 - `AGENT_SERVICE_KEY`: bootstrap endpoint key (minimum 16 characters).
 
 The generated runtime uses env variables for node ids and node credentials; no hardcoded identities are embedded.
