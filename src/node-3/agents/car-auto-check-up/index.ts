@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { ChatOpenAI } from "@langchain/openai";
 import { createAgent } from "langchain";
 import { randomAgentName, randomSystemPrompt, requiredEnv } from "../../../lib/nodes/shared";
-import type { AgentDefinition } from "../../../lib/nodes/types";
+import type { AgentDefinitionDraft } from "../../../lib/nodes/types";
 import { carAutoCheckUpToolCapabilities } from "./tool-capabilities";
 import { carAutoCheckUpTools } from "./tools";
 
@@ -21,7 +21,7 @@ export function initializeCarAutoCheckUpModel(): ChatOpenAI {
   });
 }
 
-export function createCarAutoCheckUpDefinition(nodeId: string): AgentDefinition {
+export function createCarAutoCheckUpDefinition(nodeId: string): AgentDefinitionDraft {
   const model = initializeCarAutoCheckUpModel();
   const realtimeInstructions = readPersonality();
   return {

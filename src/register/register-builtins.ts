@@ -39,6 +39,7 @@ async function registerAgentDefinition(options: {
     agent: langchainRegistration(options.definition.agent),
     nodeId: options.definition.nodeId,
     mainNodeId: options.mainNodeId,
+    agentPassphrase: options.definition.passphrase,
     enableP2a: options.enableP2a,
     realtimeInstructions: options.definition.realtimeInstructions,
   };
