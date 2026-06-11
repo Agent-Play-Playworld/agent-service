@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { ChatOpenAI } from "@langchain/openai";
 import { createAgent } from "langchain";
 import { randomAgentName, randomSystemPrompt, requiredEnv } from "../../../lib/nodes/shared";
-import type { AgentDefinition } from "../../../lib/nodes/types";
+import type { AgentDefinitionDraft } from "../../../lib/nodes/types";
 import { interviewHelpAiToolCapabilities } from "./tool-capabilities";
 import { interviewHelpAiTools } from "./tools";
 
@@ -21,7 +21,7 @@ export function initializeInterviewHelpAiModel(): ChatOpenAI {
   });
 }
 
-export function createInterviewHelpAiDefinition(nodeId: string): AgentDefinition {
+export function createInterviewHelpAiDefinition(nodeId: string): AgentDefinitionDraft {
   const model = initializeInterviewHelpAiModel();
   const realtimeInstructions = readPersonality();
   return {

@@ -62,10 +62,11 @@ Node runtime toggles are controlled in `node-tuning.yaml`:
 ## Node identity env contract
 
 - `AGENT_PLAY_ROOT_KEY`: root key content (from `.root`) used for node authentication.
-- `AGENT_SERVICE_PASSW`: default 10-word main-node passphrase when a per-node override is not set.
-- `AGENT_PLAY_MAIN_NODE_ID_1_PASSW`, `AGENT_PLAY_MAIN_NODE_ID_2_PASSW`, `AGENT_PLAY_MAIN_NODE_ID_3_PASSW`: optional passphrase aligned with each main node slot (use when mains use different phrases). If unset for a node, `AGENT_SERVICE_PASSW` is used.
+- `AGENT_PLAY_MAIN_NODE_ID_1_PASSW`, `AGENT_PLAY_MAIN_NODE_ID_2_PASSW`, `AGENT_PLAY_MAIN_NODE_ID_3_PASSW`: **main node** human passphrases used only to bootstrap the session (`RemotePlayWorld.connect`). Optional per-node override; when unset for a node, `AGENT_SERVICE_PASSW` is used.
+- `AGENT_PLAY_AGENT_NODE_ID_<n>_<slot>_PASSW`: **agent node** human passphrases (paired with each `AGENT_PLAY_AGENT_NODE_ID_<n>_<slot>`). Required at runtime for `addAgent`, heartbeat, intercom, and RPC — the SDK sends these as `x-node-passw` / `passwHash` per agent, not the main passphrase.
+- `AGENT_SERVICE_PASSW`: fallback main-node passphrase when a per-node main override is not set.
 - `AGENT_PLAY_MAIN_NODE_ID_1` / `_2` / `_3`: main node id per logical node.
 - `AGENT_PLAY_AGENT_NODE_ID_<n>_<slot>`: agent node ids (`AGENT_PLAY_AGENT_NODE_ID_3_1`, `AGENT_PLAY_AGENT_NODE_ID_3_2`, etc.).
 - `AGENT_SERVICE_KEY`: bootstrap endpoint key (minimum 16 characters).
 
-The generated runtime uses env variables for node ids and node credentials; no hardcoded identities are embedded.
+The generated runtime uses env variables for node ids and **dual credentials** (main bootstrap + per-agent runtime); no hardcoded identities are embedded.

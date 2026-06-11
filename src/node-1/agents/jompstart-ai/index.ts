@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { ChatOpenAI } from "@langchain/openai";
 import { createAgent } from "langchain";
 import { randomAgentName, randomSystemPrompt, requiredEnv } from "../../../lib/nodes/shared";
-import type { AgentDefinition } from "../../../lib/nodes/types";
+import type { AgentDefinitionDraft } from "../../../lib/nodes/types";
 import { jompstartAiToolCapabilities } from "./tool-capabilities";
 import { jompstartAiTools } from "./tools";
 
@@ -21,7 +21,7 @@ export function initializeJompstartAiModel(): ChatOpenAI {
   });
 }
 
-export function createJompstartAiDefinition(nodeId: string): AgentDefinition {
+export function createJompstartAiDefinition(nodeId: string): AgentDefinitionDraft {
   const model = initializeJompstartAiModel();
   const realtimeInstructions = readPersonality();
   return {
