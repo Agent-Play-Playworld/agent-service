@@ -18,7 +18,12 @@ function executeAssistVehicleChecklist(args: {
     checklist: {
       mileage,
       symptoms,
-      items: ["Fluid levels", "Brake feel", "Tire wear pattern", "Stored diagnostic codes"],
+      items: [
+        "Fluid levels and leaks",
+        "Brake feel and pedal response",
+        "Tire wear and pressure",
+        "Dashboard warnings and stored codes",
+      ],
     },
   };
 }
