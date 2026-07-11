@@ -26,14 +26,14 @@ export function createSunctureDefinition(nodeId: string): AgentDefinitionDraft {
   const realtimeInstructions = readPersonality();
   return {
     nodeId,
-    name: "Suncture AI",
+    name: "Medic",
     type: "langchain",
     realtimeInstructions,
     agent: createAgent({
       name: randomAgentName("lc-suncture"),
       model,
       tools: [...sunctureTools],
-      systemPrompt: randomSystemPrompt("Suncture", realtimeInstructions),
+      systemPrompt: randomSystemPrompt("Medic", realtimeInstructions),
     }),
   };
 }
