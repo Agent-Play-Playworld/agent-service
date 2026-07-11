@@ -16,7 +16,7 @@ function executeAssistRelaxationPlan(args: {
     relaxationPlan: {
       mood,
       durationMinutes,
-      steps: ["Box breathing", "Body scan", "Gentle reflection"],
+      steps: ["Box breathing", "Body scan", "Grounding before next health steps"],
     },
   };
 }

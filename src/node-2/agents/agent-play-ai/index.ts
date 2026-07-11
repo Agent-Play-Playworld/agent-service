@@ -26,14 +26,14 @@ export function createAgentPlayAiDefinition(nodeId: string): AgentDefinitionDraf
   const realtimeInstructions = readPersonality();
   return {
     nodeId,
-    name: "Agent Play AI",
+    name: "Agent Play",
     type: "langchain",
     realtimeInstructions,
     agent: createAgent({
       name: randomAgentName("lc-agent-play-ai"),
       model,
       tools: [...agentPlayAiTools],
-      systemPrompt: randomSystemPrompt("Agent Play AI", realtimeInstructions),
+      systemPrompt: randomSystemPrompt("Agent Play", realtimeInstructions),
     }),
   };
 }

@@ -26,14 +26,14 @@ export function createCarAutoCheckUpDefinition(nodeId: string): AgentDefinitionD
   const realtimeInstructions = readPersonality();
   return {
     nodeId,
-    name: "Car Auto Check Up",
+    name: "Mechanic",
     type: "langchain",
     realtimeInstructions,
     agent: createAgent({
       name: randomAgentName("lc-car-auto-check-up"),
       model,
       tools: [...carAutoCheckUpTools],
-      systemPrompt: randomSystemPrompt("Car Auto Check Up", realtimeInstructions),
+      systemPrompt: randomSystemPrompt("Mechanic", realtimeInstructions),
     }),
   };
 }

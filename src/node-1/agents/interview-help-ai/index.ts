@@ -26,14 +26,14 @@ export function createInterviewHelpAiDefinition(nodeId: string): AgentDefinition
   const realtimeInstructions = readPersonality();
   return {
     nodeId,
-    name: "Mink AI",
+    name: "HR",
     type: "langchain",
     realtimeInstructions,
     agent: createAgent({
       name: randomAgentName("lc-mink-ai"),
       model,
       tools: [...interviewHelpAiTools],
-      systemPrompt: randomSystemPrompt("Mink AI", realtimeInstructions),
+      systemPrompt: randomSystemPrompt("HR", realtimeInstructions),
     }),
   };
 }

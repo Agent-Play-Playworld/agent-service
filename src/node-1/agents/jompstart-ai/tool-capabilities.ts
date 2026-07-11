@@ -18,7 +18,7 @@ function executeAssistJompstartServiceGuide(args: {
       question,
       serviceArea,
       userGoal,
-      companySummary: "Jompstart helps users manage and pay for essential services.",
+      companySummary: "CFO guidance for cash flow, bill prioritization, and essential spending decisions.",
     },
   };
 }

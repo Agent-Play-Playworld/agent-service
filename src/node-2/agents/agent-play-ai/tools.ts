@@ -5,7 +5,7 @@ const agentPlayAiChatTool = tool(
   ({ message }: { message: string }) => `agent-play-ai:${message}`,
   {
     name: "chat_tool",
-    description: "Chat tool for questions about Agent Play’s 2D interactive world and multi-agent platform.",
+    description: "Guide to the Agent Play world and multi-agent workflows.",
     schema: z.object({ message: z.string() }),
   }
 );
@@ -16,7 +16,7 @@ const assistAgentPlayScenarioTool = tool(
   {
     name: "assist_business_system_audit",
     description:
-      "Outline how a topic maps onto Agent Play (agents in-world, interactions, multi-agent setup).",
+      "Map a problem onto Agent Play agents, in-world interactions, and multi-agent setup.",
     schema: z.object({
       domain: z.string(),
       issue: z.string(),

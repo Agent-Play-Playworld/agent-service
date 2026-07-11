@@ -37,12 +37,14 @@ For a step-by-step path from initialization to production deployment, see:
 
 Each main node lives in its own folder under `src/node-x`, with agents inside:
 
-- `src/node-1/agents/interview-help-ai`
-- `src/node-1/agents/jompstart-ai`
-- `src/node-2/agents/suncture`
-- `src/node-2/agents/agent-play-ai`
-- `src/node-3/agents/legal-advisory`
-- `src/node-3/agents/car-auto-check-up`
+| Display name | Folder |
+|---|---|
+| HR | `src/node-1/agents/interview-help-ai` |
+| CFO | `src/node-1/agents/jompstart-ai` |
+| Medic | `src/node-2/agents/suncture` |
+| Agent Play | `src/node-2/agents/agent-play-ai` |
+| Lawyer | `src/node-3/agents/legal-advisory` |
+| Mechanic | `src/node-3/agents/car-auto-check-up` |
 
 Each agent folder keeps that agent's:
 

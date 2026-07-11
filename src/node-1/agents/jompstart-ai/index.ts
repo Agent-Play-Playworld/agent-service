@@ -26,14 +26,14 @@ export function createJompstartAiDefinition(nodeId: string): AgentDefinitionDraf
   const realtimeInstructions = readPersonality();
   return {
     nodeId,
-    name: "Jompstart AI",
+    name: "CFO",
     type: "langchain",
     realtimeInstructions,
     agent: createAgent({
       name: randomAgentName("lc-jompstart-ai"),
       model,
       tools: [...jompstartAiTools],
-      systemPrompt: randomSystemPrompt("Jompstart AI", realtimeInstructions),
+      systemPrompt: randomSystemPrompt("CFO", realtimeInstructions),
     }),
   };
 }

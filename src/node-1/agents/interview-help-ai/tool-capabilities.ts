@@ -21,10 +21,10 @@ function executeAssistInterviewSessionPlan(args: {
       roleName,
       goalToday,
       phases: [
-        "Role alignment",
-        "Preparation strategy",
-        "Mock interview",
-        "Pass-focused feedback",
+        "Role and company alignment",
+        "Resume and story prep",
+        "Mock interview round",
+        "Feedback and next-step checklist",
       ],
     },
   };
