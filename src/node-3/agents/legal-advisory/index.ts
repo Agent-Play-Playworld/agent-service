@@ -26,14 +26,14 @@ export function createLegalAdvisoryDefinition(nodeId: string): AgentDefinitionDr
   const realtimeInstructions = readPersonality();
   return {
     nodeId,
-    name: "Legal Advisory",
+    name: "Lawyer",
     type: "langchain",
     realtimeInstructions,
     agent: createAgent({
       name: randomAgentName("lc-legal-advisory"),
       model,
       tools: [...legalAdvisoryTools],
-      systemPrompt: randomSystemPrompt("Legal Advisory", realtimeInstructions),
+      systemPrompt: randomSystemPrompt("Lawyer", realtimeInstructions),
     }),
   };
 }

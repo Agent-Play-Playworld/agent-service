@@ -15,7 +15,12 @@ function executeAssistLegalRiskScan(args: {
     scan: {
       topic,
       context,
-      themes: ["Contract scope", "IP ownership", "Liability caps", "Regulatory fit"],
+      themes: [
+        "Contract scope and obligations",
+        "IP ownership and assignment",
+        "Liability caps and indemnities",
+        "Regulatory and compliance fit",
+      ],
     },
   };
 }
