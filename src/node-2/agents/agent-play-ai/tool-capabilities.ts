@@ -18,7 +18,11 @@ function executeAssistAgentPlayScenario(args: {
       domain,
       issue,
       targetOutcome,
-      actions: ["Map current state", "Identify root constraints", "Define measurable fixes"],
+      actions: [
+        "Identify which agents own which tasks",
+        "Define in-world interactions and handoffs",
+        "Set expected outcomes in the canvas",
+      ],
     },
   };
 }
