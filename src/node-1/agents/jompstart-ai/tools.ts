@@ -3,7 +3,7 @@ import { z } from "zod";
 
 const jompstartChatTool = tool(({ message }: { message: string }) => `jompstart:${message}`, {
   name: "chat_tool",
-  description: "Chat tool for Jompstart AI conversations.",
+  description: "Cash flow, budgeting, and payment-priority help.",
   schema: z.object({ message: z.string() }),
 });
 
@@ -12,7 +12,7 @@ const assistJompstartServiceGuide = tool(
     `jompstart-guide:${question}:${serviceArea ?? ""}:${userGoal ?? ""}`,
   {
     name: "assist_jompstart_service_guide",
-    description: "Provide structured Jompstart service guidance.",
+    description: "Structured guidance for bills, fees, rent, transport, and savings.",
     schema: z.object({
       question: z.string(),
       serviceArea: z.string().optional(),
