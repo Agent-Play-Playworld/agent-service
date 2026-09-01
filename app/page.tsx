@@ -12,10 +12,13 @@ export default function HomePage() {
       </p>
       <ul>
         <li>
+          <code>/health</code>
+        </li>
+        <li>
           <code>/api/health</code>
         </li>
         <li>
-          <code>/api/runtime/bootstrap</code> (POST)
+          <code>/runtime/bootstrap</code> or <code>/api/runtime/bootstrap</code> (GET or POST)
         </li>
       </ul>
     </main>

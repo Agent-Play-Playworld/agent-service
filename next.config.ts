@@ -9,6 +9,18 @@ const nextConfig: NextConfig = {
     "@agent-play/node-tools",
   ],
   outputFileTracingIncludes: getVercelOutputFileTracingIncludes(),
+  async rewrites() {
+    return [
+      {
+        source: "/health",
+        destination: "/api/health",
+      },
+      {
+        source: "/runtime/bootstrap",
+        destination: "/api/runtime/bootstrap",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

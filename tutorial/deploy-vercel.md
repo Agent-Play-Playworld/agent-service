@@ -62,8 +62,8 @@ Do not rely on `~/.agent-play/credentials.json` or `.root` on Vercel. Those file
 This repository is already a Next.js app:
 
 - Framework: Next.js
-- Health: `GET /api/health`
-- Bootstrap: `POST /api/runtime/bootstrap?key=<AGENT_SERVICE_KEY>`
+- Health: `GET /health` and `GET /api/health`
+- Bootstrap: `GET` or `POST` `/runtime/bootstrap?key=<AGENT_SERVICE_KEY>` and `/api/runtime/bootstrap?key=<AGENT_SERVICE_KEY>`
 - Function runtime: Node.js, 300 second max duration
 - `node-tuning.yaml` and `src/**/*.txt` personality files are included in the serverless trace
 

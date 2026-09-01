@@ -103,6 +103,8 @@ describe("Vercel deployment contract", () => {
     expect(bootstrapRoute).toContain(
       `export const maxDuration = ${String(vercelFunctionMaxDurationSeconds)}`
     );
+    expect(bootstrapRoute).toContain("export async function GET");
+    expect(bootstrapRoute).toContain("export async function POST");
   });
 });
 

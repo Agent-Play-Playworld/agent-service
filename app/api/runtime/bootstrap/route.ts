@@ -1,54 +1,13 @@
-import { NextResponse } from "next/server";
-import {
-  getRuntimeStatus,
-  initializeRuntime,
-} from "../../../../src/lib/runtime/initialize-runtime";
-import { isAuthorizedBootstrapRequest } from "../../../../src/lib/bootstrap-auth";
+import { handleBootstrapRequest } from "../../../../src/lib/runtime/handle-bootstrap-request";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
-export async function POST(request: Request) {
-  try {
-    if (!isAuthorizedBootstrapRequest(request)) {
-      return NextResponse.json(
-        {
-          ok: false,
-          error:
-            "Unauthorized bootstrap request. Provide ?key=... with a valid key of at least 16 characters.",
-        },
-        { status: 401 }
-      );
-    }
-  } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : String(error);
-    return NextResponse.json(
-      {
-        ok: false,
-        error: message,
-      },
-      { status: 500 }
-    );
-  }
+export async function GET(request: Request) {
+  return handleBootstrapRequest(request);
+}
 
-  try {
-    const { registeredAgentIds, initializedAgents } = await initializeRuntime();
-    return NextResponse.json({
-      ok: true,
-      state: "ready",
-      registeredAgentCount: registeredAgentIds.length,
-      registeredAgentIds,
-      initializedAgents,
-    });
-  } catch (_error: unknown) {
-    const status = getRuntimeStatus();
-    return NextResponse.json(
-      {
-        ok: false,
-        ...status,
-      },
-      { status: 503 }
-    );
-  }
+export async function POST(request: Request) {
+  return handleBootstrapRequest(request);
 }

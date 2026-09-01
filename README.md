@@ -25,7 +25,8 @@ For a step-by-step path from initialization to production deployment, see:
 5. Verify routes:
   - `http://localhost:3000/`
   - `http://localhost:3000/api/health`
-  - `POST http://localhost:3000/api/runtime/bootstrap?key=<AGENT_SERVICE_KEY>` (starts agents/runtime)
+  - `GET` or `POST http://localhost:3000/runtime/bootstrap?key=<AGENT_SERVICE_KEY>`
+  - `GET` or `POST http://localhost:3000/api/runtime/bootstrap?key=<AGENT_SERVICE_KEY>`
 
 ## Deploy to Vercel
 
