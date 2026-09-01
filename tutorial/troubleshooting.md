@@ -15,9 +15,10 @@ Required env variables:
 
 - `AGENT_PLAY_ROOT_KEY`
 - `AGENT_SERVICE_PASSW`
-- `AGENT_PLAY_MAIN_NODE_ID`
-- `AGENT_PLAY_AGENT_NODE_ID_1`
-- `AGENT_PLAY_AGENT_NODE_ID_2` (optional)
+- `AGENT_PLAY_MAIN_NODE_ID_1` / `_2` / `_3`
+- `AGENT_PLAY_AGENT_NODE_ID_<n>_<slot>` (for each live agent)
+- matching `_PASSW` values for each main and agent node
+- `AGENT_SERVICE_KEY`
 
 Notes:
 
