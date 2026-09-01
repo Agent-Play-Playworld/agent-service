@@ -1,6 +1,8 @@
 # Step 5A: Deploy to Vercel
 
-Use this path when you want fast managed deployment directly from a Git repository.
+Use this path when you want managed Next.js hosting from a Git repository.
+
+This service is a Node-backed Next.js app, not a static site. Vercel must use the Next.js framework preset. Do not set an Output Directory of `public`.
 
 ## 1) Push project to Git provider
 
@@ -12,33 +14,68 @@ In Vercel:
 
 1. Click "Add New Project"
 2. Import your repository
-3. Confirm framework and root directory settings
+3. Confirm these settings:
+   - Framework Preset: `Next.js`
+   - Root Directory: repository root
+   - Build Command: `npm run build`
+   - Install Command: `npm install`
+   - Output Directory: leave empty
+   - Node.js Version: 20 or newer
+
+`vercel.json` in this repository already pins the Next.js framework so Vercel does not treat the build as a static `public` folder.
 
 ## 3) Configure environment variables
 
-In Project Settings -> Environment Variables, add the same required variables you use locally.
+In Project Settings -> Environment Variables, add the same required variables from `.env.example`.
 
-Apply them to:
+Apply them to Production and Preview:
 
-- Production
-- Preview (optional but recommended)
+- `AGENT_PLAY_WEB_UI_URL`
+- `AGENT_PLAY_ROOT_KEY`
+- `AGENT_SERVICE_PASSW`
+- `AGENT_PLAY_MAIN_NODE_ID_1`
+- `AGENT_PLAY_MAIN_NODE_ID_1_PASSW`
+- `AGENT_PLAY_MAIN_NODE_ID_2`
+- `AGENT_PLAY_MAIN_NODE_ID_2_PASSW`
+- `AGENT_PLAY_MAIN_NODE_ID_3`
+- `AGENT_PLAY_MAIN_NODE_ID_3_PASSW`
+- `AGENT_PLAY_AGENT_NODE_ID_1_1`
+- `AGENT_PLAY_AGENT_NODE_ID_1_1_PASSW`
+- `AGENT_PLAY_AGENT_NODE_ID_1_2`
+- `AGENT_PLAY_AGENT_NODE_ID_1_2_PASSW`
+- `AGENT_PLAY_AGENT_NODE_ID_2_1`
+- `AGENT_PLAY_AGENT_NODE_ID_2_1_PASSW`
+- `AGENT_PLAY_AGENT_NODE_ID_2_2`
+- `AGENT_PLAY_AGENT_NODE_ID_2_2_PASSW`
+- `AGENT_PLAY_AGENT_NODE_ID_3_1`
+- `AGENT_PLAY_AGENT_NODE_ID_3_1_PASSW`
+- `AGENT_PLAY_AGENT_NODE_ID_3_2`
+- `AGENT_PLAY_AGENT_NODE_ID_3_2_PASSW`
+- `OPENAI_API_KEY`
+- `AGENT_SERVICE_KEY` (minimum 16 characters)
+- `P2A_WEBRTC_ENABLED`
 
-## 4) Configure build and run behavior
+Do not rely on `~/.agent-play/credentials.json` or `.root` on Vercel. Those files are not available in the function filesystem.
 
-This repository runs as a Next.js app, so Vercel can auto-detect framework settings.
+## 4) Build and runtime behavior
 
-In Project Settings:
+This repository is already a Next.js app:
 
-- Framework Preset: `Next.js`
-- Build command: `npm run build` (default)
-- Install command: `npm install` (default)
-- Output Directory: leave empty (Next.js default)
+- Framework: Next.js
+- Health: `GET /health` and `GET /api/health`
+- Bootstrap: `GET` or `POST` `/runtime/bootstrap?key=<AGENT_SERVICE_KEY>` and `/api/runtime/bootstrap?key=<AGENT_SERVICE_KEY>`
+- Function runtime: Node.js, 300 second max duration
+- `node-tuning.yaml` and `src/**/*.txt` personality files are included in the serverless trace
 
-Runtime behavior note: this project initializes the agent runtime via `POST /api/runtime/bootstrap`. Vercel may recycle server instances between requests, so trigger bootstrap per active instance and validate behavior under your expected traffic patterns.
+Runtime initialization is per function instance. Vercel may recycle instances, so call bootstrap after deploy and again if `/api/health` reports a state other than `ready`.
+
+Long-lived intercom subscriptions live in process memory. Fluid Compute keeps an instance warm while it has traffic, but idle instances can freeze or recycle. Re-bootstrap after a recycle.
 
 ## 5) Deploy and validate
 
-- Trigger deploy from dashboard or push a commit
-- Open deployment URL
-- Validate startup and core agent behavior
-- Review runtime logs in Vercel for any missing env values
+- Trigger deploy from the dashboard or push a commit
+- Open the deployment URL
+- Confirm `GET /api/health` responds
+- Run `POST /api/runtime/bootstrap?key=<AGENT_SERVICE_KEY>`
+- Confirm `/api/health` reports `runtime.state` of `ready`
+- Review runtime logs for missing env values or registration errors

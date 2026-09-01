@@ -6,13 +6,14 @@ This step standardizes how your service behaves in production across hosting pro
 
 Add all required variables from your local `.env` into the target platform's environment variable settings.
 
-At minimum include:
+At minimum include the variables listed in `.env.example`, especially:
 
 - `AGENT_PLAY_ROOT_KEY` (root key that would normally come from `.root`)
-- `AGENT_SERVICE_PASSW` (the 10-key phrase from main node initialization)
-- `AGENT_PLAY_MAIN_NODE_ID`
-- `AGENT_PLAY_AGENT_NODE_ID_1`
-- `AGENT_PLAY_AGENT_NODE_ID_2` (if used)
+- `AGENT_SERVICE_PASSW` (fallback main-node passphrase)
+- `AGENT_PLAY_MAIN_NODE_ID_1` / `_2` / `_3` and matching `_PASSW` values
+- `AGENT_PLAY_AGENT_NODE_ID_<n>_<slot>` and matching `_PASSW` values
+- `OPENAI_API_KEY`
+- `AGENT_SERVICE_KEY` (minimum 16 characters)
 
 Also include any additional credentials your runtime needs.
 

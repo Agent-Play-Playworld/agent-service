@@ -25,7 +25,12 @@ For a step-by-step path from initialization to production deployment, see:
 5. Verify routes:
   - `http://localhost:3000/`
   - `http://localhost:3000/api/health`
-  - `POST http://localhost:3000/api/runtime/bootstrap?key=<AGENT_SERVICE_KEY>` (starts agents/runtime)
+  - `GET` or `POST http://localhost:3000/runtime/bootstrap?key=<AGENT_SERVICE_KEY>`
+  - `GET` or `POST http://localhost:3000/api/runtime/bootstrap?key=<AGENT_SERVICE_KEY>`
+
+## Deploy to Vercel
+
+This repo is a Next.js app. Vercel should use the Next.js framework preset and leave Output Directory empty. See `tutorial/deploy-vercel.md` for environment variables, bootstrap, and instance-recycle notes.
 
 ## What this service is for
 
