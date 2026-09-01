@@ -53,14 +53,11 @@ describe("bootstrap HTTP surface", () => {
       join(process.cwd(), "src/create-http-app.ts"),
       "utf8"
     );
-    const nextAlias = readFileSync(
-      join(process.cwd(), "app/runtime/bootstrap/route.ts"),
-      "utf8"
-    );
+    const nextConfig = readFileSync(join(process.cwd(), "next.config.ts"), "utf8");
 
     expect(expressApp).toContain('app.all("/runtime/bootstrap"');
     expect(expressApp).toContain('app.all("/api/runtime/bootstrap"');
-    expect(nextAlias).toContain("GET");
-    expect(nextAlias).toContain("POST");
+    expect(nextConfig).toContain('source: "/runtime/bootstrap"');
+    expect(nextConfig).toContain('destination: "/api/runtime/bootstrap"');
   });
 });
