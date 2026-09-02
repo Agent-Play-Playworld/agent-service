@@ -27,10 +27,12 @@ For a step-by-step path from initialization to production deployment, see:
   - `http://localhost:3000/api/health`
   - `GET` or `POST http://localhost:3000/runtime/bootstrap?key=<AGENT_SERVICE_KEY>`
   - `GET` or `POST http://localhost:3000/api/runtime/bootstrap?key=<AGENT_SERVICE_KEY>`
+6. Or run in Docker:
+  - `docker compose up --build`
 
 ## Deploy to Vercel
 
-This repo is a Next.js app. Vercel should use the Next.js framework preset and leave Output Directory empty. See `tutorial/deploy-vercel.md` for environment variables, bootstrap, and instance-recycle notes.
+This repo is a Next.js app. Vercel should use the Next.js framework preset and leave Output Directory empty. See `tutorial/deploy-vercel.md` for environment variables, bootstrap, and instance-recycle notes. See `tutorial/deploy-docker.md` for a container that stays up.
 
 ## What this service is for
 

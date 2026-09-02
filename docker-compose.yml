@@ -1,0 +1,13 @@
+services:
+  agent-service:
+    build:
+      context: .
+    ports:
+      - "3100:3100"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: "3100"
+    restart: unless-stopped

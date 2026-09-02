@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+node_modules
+dist
+.git
+.gitignore
+.next
+*.md
+tutorial
+articles
+docker-image.test.ts
+docker-compose.yml
