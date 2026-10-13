@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ChatOpenAI } from "@langchain/openai";
 import { createAgent } from "langchain";
-import { randomAgentName, randomSystemPrompt, requiredEnv } from "../../../lib/nodes/shared";
+import { randomAgentName, requiredEnv } from "../../../lib/nodes/shared";
 import type { AgentDefinitionDraft } from "../../../lib/nodes/types";
 import { carAutoCheckUpToolCapabilities } from "./tool-capabilities";
 import { carAutoCheckUpTools } from "./tools";
@@ -33,7 +33,7 @@ export function createCarAutoCheckUpDefinition(nodeId: string): AgentDefinitionD
       name: randomAgentName("lc-car-auto-check-up"),
       model,
       tools: [...carAutoCheckUpTools],
-      systemPrompt: randomSystemPrompt("Mechanic", realtimeInstructions),
+      systemPrompt: realtimeInstructions,
     }),
   };
 }

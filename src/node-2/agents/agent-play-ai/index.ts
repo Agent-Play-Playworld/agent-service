@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ChatOpenAI } from "@langchain/openai";
 import { createAgent } from "langchain";
-import { randomAgentName, randomSystemPrompt, requiredEnv } from "../../../lib/nodes/shared";
+import { randomAgentName, requiredEnv } from "../../../lib/nodes/shared";
 import type { AgentDefinitionDraft } from "../../../lib/nodes/types";
 import { agentPlayAiToolCapabilities } from "./tool-capabilities";
 import { agentPlayAiTools } from "./tools";
@@ -33,7 +33,7 @@ export function createAgentPlayAiDefinition(nodeId: string): AgentDefinitionDraf
       name: randomAgentName("lc-agent-play-ai"),
       model,
       tools: [...agentPlayAiTools],
-      systemPrompt: randomSystemPrompt("Play World", realtimeInstructions),
+      systemPrompt: realtimeInstructions,
     }),
   };
 }

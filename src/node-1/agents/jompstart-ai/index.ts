@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ChatOpenAI } from "@langchain/openai";
 import { createAgent } from "langchain";
-import { randomAgentName, randomSystemPrompt, requiredEnv } from "../../../lib/nodes/shared";
+import { randomAgentName, requiredEnv } from "../../../lib/nodes/shared";
 import type { AgentDefinitionDraft } from "../../../lib/nodes/types";
 import { jompstartAiToolCapabilities } from "./tool-capabilities";
 import { jompstartAiTools } from "./tools";
@@ -33,7 +33,7 @@ export function createJompstartAiDefinition(nodeId: string): AgentDefinitionDraf
       name: randomAgentName("lc-jompstart-ai"),
       model,
       tools: [...jompstartAiTools],
-      systemPrompt: randomSystemPrompt("CFO", realtimeInstructions),
+      systemPrompt: realtimeInstructions,
     }),
   };
 }
